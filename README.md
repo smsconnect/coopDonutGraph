@@ -1,7 +1,7 @@
 # coopDonutGraph
 
 ##Description
-An interactive article made for the RIT Media Science app. The article features a 'donut graph' (pie graph that is hollow) which shows the different industries in which SMS students get co-ops.
+An interactive article made for the RIT Media Sciences app. The article features a 'donut graph' (pie graph that is hollow) which shows the different industries in which SMS students get co-ops.
 
 Users can interact with the graph to display the percentage of SMS students that find a co-op in that industry. Interface and interaction animations are built with JavaScript and D3.js (a JavaScript visualization library).
 
