@@ -11,7 +11,7 @@ Users can interact with the graph to display the percentage of SMS students that
 ##Code Status
 1. The code features an outdated back button (weird button at bottom left of screen that pulls down the status bar) that was a work around from the summer/fall of last year.
 
-2. The industries in the article are not what we want. They will need to be changed to match the industryes that the SMS faculty and management decide upon.
+2. The industries in the article are not what we want. They will need to be changed to match the industries that the SMS faculty and management decide upon.
 
 3. The data that the graph is constructed from will need to be updated to reflect the industry change as well, and the data should probably be stored in a database.
 
