@@ -1,0 +1,139 @@
+/**
+ * Fix #hidden-link height on short devices by adjusting padding
+ */
+/*
+
+SHOULD BE IN mediaQ_donut.js
+
+@media screen
+and (max-device-height: 500px)
+and (-webkit-min-device-pixel-ratio: 2) {
+  a#hidden-link {
+    padding: 2% 2% 0%;
+  }
+}
+*/
+
+
+
+/**
+ * iPad sized or similar tablet. Makes text and padding on elements greater
+ */
+@media screen
+and (min-device-width: 760px)
+and (-webkit-min-device-pixel-ratio: 2) {
+
+  //SHOULD BE IN mediaQ_donut.scss
+  //a#hidden-link {
+  //  padding: 3% 2% 6%;
+  //}
+
+  .donut-text {
+    font-size: 1.1em;
+  }
+
+  #hidden-link span {
+    font-size: 1.6em;
+  }
+
+  #hidden-link {
+    height: 62px;
+    font-size: 1.15em;
+  }
+
+  .text-middle .percent-number {
+    font-size: 5.5em;
+  }
+
+  .text-middle .percent-text {
+    font-size: 1.75em;
+  }
+
+  .label {
+    font-size: 1.6em;
+    padding: 6px 0px;
+  }
+
+  .industry-text {
+    font-size: 2.5em;
+    height: 51px;
+    //padding: 2px 0px;
+  }
+}
+
+
+
+/**
+ * Fix for title margin for iPhone 6+ and similar width devices
+ */
+@media screen
+and (max-device-width: 415px)
+and (-webkit-min-device-pixel-ratio: 3) {
+
+}
+
+//below 375 font size in donut adjustment
+@media screen
+and (max-device-width: 375px)
+and (-webkit-min-device-pixel-ratio: 2) {
+  #hidden-link span {
+    font-size: 1em;
+  }
+
+  #hidden-link {
+    height: 43px;
+    bottom: 2.5%;
+  }
+
+  .text-middle .percent-number {
+    font-size: 3em;
+  }
+
+  .text-middle .percent-text {
+    font-size: .925em;
+  }
+
+
+}
+
+
+
+
+/**
+ * Fixes initial description dimensions and text attributes on iPhone 5
+ */
+@media screen
+and (max-device-width: 320px)
+and (-webkit-min-device-pixel-ratio: 2) {
+
+  .donut-text{
+    font-size: .65em;
+    text-shadow: rgba(0, 0, 0, 0.5) 2px 2px 3px;
+  }
+}
+
+
+/**
+ * Fixes label text size on drop down industry text for iphone4
+ */
+@media screen
+and (max-device-width: 320px)
+and (max-device-height: 530px)
+and (-webkit-min-device-pixel-ratio: 2) {
+  .label{
+    font-size: .925em;
+    padding: 3px 0px;
+  }
+
+  .industry-text{
+    font-size: 1.35em;
+    height: 25px;
+    padding: 2px 0px;
+  }
+}
+
+
+
+
+
+

@@ -1,0 +1,50 @@
+[
+	{
+		"industry":"Print",
+		"count":53,
+		"percent":37,
+		"article": 1
+	},
+
+	{
+		"industry":"Agency",
+		"count":21,
+		"percent":15,
+		"article": 1
+	},
+
+	{
+		"industry":"Consumer Products",
+		"count":22,
+		"percent":15,
+		"article": 0
+	},
+
+	{
+		"industry":"Publishing",
+		"count":13,
+		"percent":9,
+		"article": 1
+	},
+
+	{
+		"industry":"Vender",
+		"count":13,
+		"percent":9,
+		"article": 0
+	},
+
+	{
+		"industry":"Other",
+		"count":11,
+		"percent":7,
+		"article": 1
+	},
+
+	{
+		"industry":"Mobile/Software",
+		"count":8,
+		"percent":6,
+		"article": 0
+	}
+]

@@ -1,0 +1,109 @@
+$top-background-color:#000;
+$description-top-font: "Avenir-Roman", sans-serif;
+$directions-text-color: #fff;
+$directions-title-color: #fff;
+
+.description-holder {
+  background: $top-background-color;
+  color: $directions-title-color;
+  left: 0;
+  padding: 1.5vh 4vw;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: height 1s;
+  z-index: 1;
+  overflow: hidden;
+
+  .text {
+    color: #fff;
+    font-size: 4.5vw;
+    line-height: 1.75;
+    margin-top: 3vw;
+    padding: 8px;
+    pointer-events: none;
+    text-indent: 4.5vw;
+    transition: opacity .5s;
+  }
+
+  .title {
+    color: $directions-title-color;
+    font-family: $description-top-font;
+    font-size: 6vw;
+    margin: 0px;
+    transition: font-size .3s;
+  }
+}
+
+.hidden {
+
+  //&.button.description {
+  //  bottom: 93%;
+  //  height: 25px;
+  //  left: 81%;
+  //  transition: bottom 1s, left .25s, height 1s, width 1s;
+  //  width: 25px;
+  //}
+
+  &.description-holder {
+
+    .text {
+      //opacity: 0;
+    }
+
+    .title {
+      //font-family: "Avenir-Roman", sans-serif;
+      //font-size: 1.3em;
+    }
+  }
+}
+
+.description-close-holder {
+  position: absolute;
+  right: 0px;
+  bottom:0px;
+      width: 15vw;
+    height: 9vh;
+}
+
+.description-close {
+  bottom: 0px;
+  font-size: 10vw;
+  //height: 60px;
+  position: absolute;
+  margin: 0px 4vw 2vw 4vw;
+  right: 0px;
+  //bottom: 3vw;
+  text-align: center;
+  //transition: opacity .25s;
+  //width: 60px;
+
+  &:active {
+    color: rgba(255, 255, 255, 0.7);
+  }
+}
+
+.description-arrow {
+  float: right;
+  display: none;
+  position: relative;
+  top: 1px;
+  //transition: opacity .25s;
+}
+
+@media screen and (min-width: 599px) {
+  .description-holder {
+
+    .text {
+      font-size: 3.5vw;
+    }
+
+    .title {
+      font-size: 5vw;
+    }
+
+    .description-close {
+      font-size: 8vw;
+    }
+  }
+}
