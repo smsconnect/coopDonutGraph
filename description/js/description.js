@@ -203,9 +203,9 @@ var description = {
       donut.leavePath(donut.current.d, donut.current.touched);
     }
 
-    if(!help.hidden){
-      help.hide();
-    }
+    // if(!help.hidden){
+    //   help.hide();
+    // }
 
 
     description.elem.holder.style.height = description.meas.height + "px";

@@ -33,38 +33,32 @@ var donut = {
 
   setUp: function(){
     $( document ).ready(function(){
-      //rdb.emitClientInfo();
-
-
       var dM = donut.meas;
 
       dM.width = document.documentElement.clientWidth,
       dM.height = document.documentElement.clientHeight,
 
-      //dM.textBoxHeight = 66;
       dM.circleCY = dM.height / 2.6;
       dM.circleCX = dM.width / 2;
 
       dM.outerRadius = donut.calculateRadii("outerRadius");
       dM.innerRadius = donut.calculateRadii("innerRadius");
-      console.log(dM.outerRadius);
-      console.log(dM.innerRadius);
 
       dM.circleOutsideEdge = dM.circleCY + dM.outerRadius;
 
-      console.log(dM.height);
       dM.industryEndLocation = dM.height < 500 ? Math.round(dM.circleOutsideEdge + dM.height * (2 / 29)) : Math.round(dM.circleOutsideEdge + dM.height * (1 / 11));
 
-      api.setUp();
       description.setUp();
-      help.setUp(donut);
 
+      //several functions to construct
       donut.positionElements();
       donut.makeTools();
       donut.makeVis();
       donut.addListeners();
       donut.phoneOrTabletArticles();
-      buttons.createButtons();
+
+      //call API function to disable nav dropdown
+      goAPI();
     });
   },
 
@@ -239,9 +233,9 @@ var donut = {
           description.hide();
         }
 
-        if (!help.hidden) {
-          help.hide();
-        }
+        // if (!help.hidden) {
+        //   help.hide();
+        // }
       })
       //.on("mouseout", function(d){
        // console.log("left")
@@ -298,9 +292,9 @@ var donut = {
       description.hide();
     }
 
-    if(!help.hidden){
-      help.hide();
-    }
+    // if(!help.hidden){
+    //   help.hide();
+    // }
 
     if(d.data.image){
       d3.select('#background')
