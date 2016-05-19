@@ -8,46 +8,37 @@ var donut = {
     active: false
   },
 
+  //data object for the top description
   description: {
     "title": "Co-op Industry Visualization",
     "text": "Touch a section of the donut graph to view the industries where our students have had a co-op, as well as the percentage of student who get a co-op in that industry."
   },
 
-  helpDescription: [
-    {
-      "text" : "Touch a colored section of the 'donut' graph",
-      "image" : "images/donut1_finger2.jpg"
-    },
-    {
-      "text" : "View industry name and percentage of SMS students that have had a co-op in that industry within the last 5 years",
-      "image" : "images/donut3.jpg"
-    },
-    {
-      "text" : "If there is an industry related student co-op story, click the link that appears at the bottom of the screen to view the story",
-      "image" : "images/donut4.jpg"
-    }
-  ],
-
   //property to distinguish whether to users to phone or tablet articles if cross linking to another article within the app [defaults to phone]
   articles: "phone",
 
+
+
+  /**
+   * Starts the creation of the donut object and animation and calls other contructing functions
+   */
   setUp: function(){
     $( document ).ready(function(){
       var dM = donut.meas;
 
+      //get width and height of screen
       dM.width = document.documentElement.clientWidth,
       dM.height = document.documentElement.clientHeight,
 
+      //calculations to base the size of the graph and placement of animations on the screen size
       dM.circleCY = dM.height / 2.6;
       dM.circleCX = dM.width / 2;
-
       dM.outerRadius = donut.calculateRadii("outerRadius");
       dM.innerRadius = donut.calculateRadii("innerRadius");
-
       dM.circleOutsideEdge = dM.circleCY + dM.outerRadius;
-
       dM.industryEndLocation = dM.height < 500 ? Math.round(dM.circleOutsideEdge + dM.height * (2 / 29)) : Math.round(dM.circleOutsideEdge + dM.height * (1 / 11));
 
+      //sets up the description at the top of the article
       description.setUp();
 
       //several functions to construct
@@ -63,21 +54,24 @@ var donut = {
   },
 
 
-
+  /**
+   * Calculates inner and outer radius for donut graph -- different measurements above
+   * and below 600 pixels
+   */
   calculateRadii: function(radius){
-    //var ratio = donut.meas.width / donut.meas.height;
-    //console.log(donut.meas.width);
-    console.log(donut.meas.width < 600);
     if(donut.meas.width < 600){
       if(radius == "outerRadius"){
         return donut.meas.width / 2 - (donut.meas.width / 25);
-      }else{
+      }
+      else{
         return (donut.meas.width/2 - (donut.meas.width / 25)) - (donut.meas.width * .2);
       }
-    }else{
+    }
+    else{
       if(radius == "outerRadius"){
         return 280;
-      }else{
+      }
+      else{
         return 160;
       }
     }
@@ -85,6 +79,10 @@ var donut = {
 
 
 
+  /**
+   * Calculations to properly position the text elements and article link that
+   * animate when a user interacts with the donut graph.
+   */
   positionElements: function(){
     var dE = donut.elem;
     var dM = donut.meas;
@@ -133,19 +131,26 @@ var donut = {
   },
 
 
-
+  /**
+   * Make the d3 arc 'tools', set the color bands, assign their inner and outer
+   * radii, sort the sections by percentage size
+   */
   makeTools: function(){
+    //use built in d3 color scale to color donut
     donut.d3tools.color = d3.scale.ordinal()
       .range(["#002e6c", "#00adee", "#ff661b", "#025594", "#9fc600", "#333333", "#be1e2d"]);
 
+    //make the first d3 arc
     donut.d3tools.arc = d3.svg.arc()
       .outerRadius(donut.meas.outerRadius)
       .innerRadius(donut.meas.innerRadius);
 
+    //make a second d3 arc
     donut.d3tools.secondaryArc = d3.svg.arc()
       .outerRadius(donut.meas.outerRadius + (donut.meas.width / 35))
       .innerRadius(donut.meas.innerRadius);
 
+    //make pie function that will sort the sections and arrange by size
     donut.d3tools.pie = d3.layout.pie()
       .sort(null)
       .value(function(d) {
@@ -154,7 +159,13 @@ var donut = {
   },
 
 
-
+  /**
+   * Use the d3 arcs that we just created and actually construct the donut width
+   * and height and the different sections of the donut using the percentage in the
+   * data object.
+   *
+   * @return {[type]} [description]
+   */
   makeVis: function(){
     //'svg' element that is the same size as the screen - holds all vis elements
     donut.elem.svg = d3.select("body")
@@ -219,9 +230,14 @@ var donut = {
       })
       .attr("fill", "white")
       .text(function(d) { return d.data.industry; });
-    },
+  },
 
 
+
+  /**
+   * Adds a listener to the body of the page which will close the description if it is open
+   * and it will deselect a portion of the donut if it was selected
+   */
   addListeners: function() {
     d3.select("body")
       .on ("touchstart", function(d) {
@@ -232,36 +248,31 @@ var donut = {
         if (!description.hidden) {
           description.hide();
         }
-
-        // if (!help.hidden) {
-        //   help.hide();
-        // }
-      })
-      //.on("mouseout", function(d){
-       // console.log("left")
-       // d3.select(this).attr("d", donut.d3tools.arc);
-       // donut.leavePath(d, this);
-      //});
+      });
   },
 
 
 
+  /**
+   * Adobe problem...determines whether the screen is smaller or larger than 600 pixels;
+   * this effects the link that we use for the outside articles.
+   */
   phoneOrTabletArticles: function() {
     var width = donut.meas.width;
 
     if (width >= 600) {
       donut.articles = "tablet";
     }
-    console.log(donut.articles);
   },
 
 
 
+  /**
+   * Handles the behavior when a user touches a section of the donut graph
 
-
-
-
-
+   * @param  {object} d       data object for d3 elements
+   * @param  {[type]} touched which path was touched by the user
+   */
   touchPath: function(d, touched) {
 
     if (donut.current.active) {
@@ -269,11 +280,8 @@ var donut = {
     }
 
     if (d.data.industry === "Other") {
-      console.log(d3.select(".label up"));
       donut.elem.industryLabelUp.innerHTML = "...find a co-op in an";
       donut.elem.industryLabelBack.style.background = "#000";
-      //d3.select("#other-switch").html("...find a co-op in an");
-      //d3.select("")
     }else {
       donut.elem.industryLabelUp.innerHTML = "...find a co-op in the";
       donut.elem.industryLabelBack.style.background = "rgba(0, 0, 0, 0.75)";
@@ -282,19 +290,9 @@ var donut = {
     donut.elem.centerCircle
         .attr("fill","rgba(255,255,255,0)");
 
-    //if(donut.open){
-    //  donut.leavePath(donut.data, donut.open);
-    //}
-    //donut.open = touched;
-    //console.log(donut.open);
-
     if(!description.hidden){
       description.hide();
     }
-
-    // if(!help.hidden){
-    //   help.hide();
-    // }
 
     if(d.data.image){
       d3.select('#background')
@@ -304,27 +302,11 @@ var donut = {
       d3.select('#background').style("display", "none");
     }
 
-    //console.log(touched);
-    //donut.current.push(touched);
-    //console.log(donut.current);
-
-   /* console.log($(touched.parentNode).siblings());
-    var siblings = $(touched.parentNode).siblings();
-    for(var i = 0; i < siblings.length; i++){
-      console.log(siblings[i]);
-      //donut.leavePath(donut.data, siblings[i]);
-    }
-    console.log("break");*/
-
-    ////
-
     d3.select(touched.parentNode.childNodes[1])
       .transition()
         .text(function(d) {
           return "";
         });
-
-    ///
 
     d3.select(donut.elem.industry)
       .text(d.data.industry);
@@ -336,9 +318,6 @@ var donut = {
       .style("opacity", 0)
       .transition().duration(500)
         .style("opacity", 1);
-
-    //donut.elem.divMiddle.style.opacity = 1;
-
 
     donut.elem.centerCircle
       .transition().duration(1500)
@@ -353,8 +332,6 @@ var donut = {
         .style("opacity", 1)
         .style("background", touched.style.fill)
         .style("top", donut.meas.industryEndLocation + "px")
-    //    .each("end", function(){
-          //console.log(this);
 
     d3.select(donut.elem.industryLabelBack)
       .style("top", donut.meas.industryEndLocation + "px")
@@ -378,9 +355,7 @@ var donut = {
       .transition().duration(750)
         .style("top", donut.meas.industryLabelDownEndLocation + "px")
         .style("opacity", 1);
-      //  });
-      //
-      //
+
     donut.current.active = true;
     donut.current.d = d;
     donut.current.touched = touched;
@@ -394,18 +369,21 @@ var donut = {
       dehL.style.opacity = 1;
       dehL.style.background = touched.style.fill;
       dehL.removeEventListener("click", donut.stopDefAction);
-
-
-    }else{
+    }
+    else{
       donut.elem.hiddenLink.addEventListener("click", donut.stopDefAction, false);
     }
   },
 
 
 
-  leavePath: function(d, touched){
-    console.log(touched);
+  /**
+   * Handles the behavior when a user touches something after touching a donut graph path
 
+   * @param  {object} d       data object for d3 elements
+   * @param  {[type]} touched which path was touched by the user
+   */
+  leavePath: function(d, touched){
     d3.select(touched.parentNode.childNodes[1])
       .transition()
         .text(function(d) {
@@ -413,12 +391,8 @@ var donut = {
         });
 
     d3.select(touched)
-      //.transition()
-          .transition("linear")
-            .attr("d", donut.d3tools.arc);
-        /*.style("fill",function(d) {
-          return donut.d3tools.color(donut.data.indexOf(d.data));
-        });*/
+      .transition("linear")
+        .attr("d", donut.d3tools.arc);
 
     donut.current.active = false;
 
@@ -430,13 +404,9 @@ var donut = {
       .transition().duration(700)
         .style("opacity", 0);
 
-    console.log(donut.meas.industryStartLocation);
     d3.select(".industry-text")
       .transition().duration(750)
         .style("top", donut.meas.industryStartLocation + "px")
-        //.style("background","#e5e5e5")
-        //.style("text-shadow","none")
-        //.style("color","#e5e5e5");
         .style("opacity", 0)
 
     d3.select(donut.elem.industryLabelBack)
@@ -457,32 +427,18 @@ var donut = {
 
     donut.elem.hiddenLink.style.opacity = 0;
     donut.elem.hiddenLink.style.background = "#666";
-
-    //donut.open = false;
   },
 
+
+
+  /**
+   * Stops default action of an event...not sure why I made a function for this
+   * @param  {object} evt Event object that is having its default action suppressed
+   */
   stopDefAction: function(evt){
     evt.preventDefault();
   },
 
-/*
-  specialSizing: function(){
-    console.log(donut.meas.width);
-    if(donut.meas.width > 750){
-      return ".9em";
-    }
-
-    if(donut.meas.width > 400){
-      return ".6em";
-    }
-
-    if(donut.meas.width < 360){
-      return ".5em";
-    }
-
-    return ".55em";
-  },
-*/
 
 
   //main data object that holds industry names, percentage, and if we have article of not (also unused count property as of right now)
