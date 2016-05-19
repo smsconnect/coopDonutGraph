@@ -1,12 +1,3 @@
-//depends on 'button.js', '_buttons.scss', and '_description.scss' to work properly
-
-//depends on the following elements in the index.html file:
-//- a [div] in the body with class 'button description'
-//- a [div] in the body with class 'top' that holds:
-//  - [h1] with class 'title'
-//  - [p] with class 'directions'
-
-
 
 //Main object that holds functions that deal with positioning sizing of inititial
 //description and title of a visualizations. Default state is visibile when the user
@@ -81,10 +72,6 @@ var description = {
    *   Creates div to hold all help explanations ('help-text') and a close button.
    *   Creating here and adding to the DOM allows 'help.js' to be properly applied
    *   to many different visualization without editing the 'index.html' of each vis.
-   *
-   *  <h1 class="title">Co-op Industry Visualization</h1>
-      <p class="description">
-      </p>
    */
   addElements: function(){
     var holder = document.createElement("div");
@@ -93,7 +80,6 @@ var description = {
     var closeTap = document.createElement("div");
     var close = document.createElement("p");
 
-    console.log(description.elem);
     description.elem.holder = holder; //save reference to main div to be used later
     description.elem.title = title; //save reference to title <h1> element to be used later
     description.elem.text = text; //save reference to 'help-close' <p> element to be used later
@@ -116,15 +102,11 @@ var description = {
     holder.appendChild(closeTap);
     document.body.appendChild(holder);
 
-    console.log(holder.clientHeight);
     description.meas.height = holder.clientHeight + 30;
     holder.style.height = description.meas.height + "px";
 
     var titleHeight = title.clientHeight + (Math.round(title.clientHeight * .055));
-    console.log(titleHeight);
     description.meas.hideHeight = titleHeight;
-    //console.log(document.documentElement.clientWidth)
-    //console.log(document.documentElement.clientHeight)
   },
 
 
@@ -151,24 +133,10 @@ var description = {
    *   are no longer visible, and moves the button to the top right area of the screen
    */
   hide: function(){
-    console.log("HIDEEE!!!");
-    //if (description.elem.arrow) {
-      //setTimeout(function(){
-      //  description.elem.arrow.style.opacity = 1;
-      //},500);
-      $( ".description-arrow" ).stop(true).fadeIn();
-      $( ".description-close" ).stop(true).fadeOut();
-      //console.log(description.elem.arrow);
-    //} else {
-    //  description.elem.arrow = $( ".description-arrow" );
-    //  console.log(description.elem.arrow);
-    //  //setTimeout(function(){
-    //  //  description.elem.arrow.style.opacity = 1;
-    //  //},500);
-    //  description.elem.arrow.delay(500).stop(true).fadeIn();
-    //}
 
-    console.log(description.meas.hideHeight);
+    $( ".description-arrow" ).stop(true).fadeIn();
+    $( ".description-close" ).stop(true).fadeOut();
+
     description.elem.holder.style.height = description.meas.hideHeight + "px";
     description.elem.holder.setAttribute("class", "hidden description-holder");
 
@@ -203,18 +171,8 @@ var description = {
       donut.leavePath(donut.current.d, donut.current.touched);
     }
 
-    // if(!help.hidden){
-    //   help.hide();
-    // }
-
-
     description.elem.holder.style.height = description.meas.height + "px";
     description.elem.holder.setAttribute("class", "description-holder");
-
-    //description.elem.close.innerHTML = "&#215;";
-    //setTimeout(function(){
-    //  description.elem.close.style.opacity = 1;
-    //},800);
 
     description.elem.text.style.opacity = 1;
 
